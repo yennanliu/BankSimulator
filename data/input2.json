@@ -1,14 +1,14 @@
 [
    {
       "account":{
-         "active-card":true,
-         "available-limit":100
+         "active_card":true,
+         "available_limit":100
       }
    },
    {
       "account":{
-         "active-card":true,
-         "available-limit":350
+         "active_card":true,
+         "available_limit":350
       }
    }
 ]
