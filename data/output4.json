@@ -1,11 +1,11 @@
 [
    {
       "account":{
-         "active-card":true,
-         "available-limit":80
+         "active_card":true,
+         "available_limit":80
       },
       "violations":[
-         "insufficient-limit"
+         "insufficient_limit"
       ]
    }
 ]

@@ -1,8 +1,8 @@
 [
    {
       "account":{
-         "active-card":true,
-         "available-limit":100
+         "active_card":true,
+         "available_limit":100
       },
       "violations":[
 
@@ -10,11 +10,11 @@
    },
    {
       "account":{
-         "active-card":true,
-         "available-limit":100
+         "active_card":true,
+         "available_limit":100
       },
       "violations":[
-         "account-already-initialized"
+         "account_already_initialized"
       ]
    }
 ]
