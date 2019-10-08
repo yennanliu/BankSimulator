@@ -6,7 +6,7 @@ class BankTransaction:
     def __init__(self):
         self.active_card = False
         self.account_exist = False
-        self.available_limit = 0 
+        self.available_limit = None
         self.transactions = {}
 
     def read_std_input(self, json_file):
@@ -15,7 +15,7 @@ class BankTransaction:
         return data 
 
     def account_creation(self, available_limit):
-        if self.account_exist == True:
+        if self.account_exist == True or self.available_limit is not None:
             return {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["account_alread_initialized"]}
         self.active_card = True
         self.available_limit = available_limit
@@ -34,7 +34,7 @@ class BankTransaction:
          # to add : 1) 3 transactions in 2 mins 2) > 1 similar transactions in 2 mins
 
         print ('transaction ok')
-        return {"account": {"active_card": self.active_card - amount, "available_limit": self.available_limit}, "violations": []}
+        return {"account": {"active_card": self.active_card, "available_limit": self.available_limit - amount}, "violations": []}
 
     def get_account_status(self):
         account_status = {'active_card': self.active_card,
