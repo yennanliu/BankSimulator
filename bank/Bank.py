@@ -33,7 +33,6 @@ class BankTransaction:
     
          # to add : 1) 3 transactions in 2 mins 2) > 1 similar transactions in 2 mins
 
-        print ('transaction ok')
         return {"account": {"active_card": self.active_card, "available_limit": self.available_limit - amount}, "violations": []}
 
     def get_account_status(self):
@@ -42,5 +41,6 @@ class BankTransaction:
                           'account_exist' : self.account_exist}
         print (account_status)
 
-    def run(self):
-        pass 
+    def run(self, available_limit, amount, time):
+        self.account_creation(available_limit)
+        self.transaction_authorization(amount, time)
