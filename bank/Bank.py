@@ -7,49 +7,59 @@ class BankTransaction:
         self.active_card = False
         self.account_exist = False
         self.available_limit = None
+        self.violations = None
         self.transactions = {}
 
-    def read_std_input(self, json_file):
+    def _read_std_input(self, json_file):
         with open(json_file) as json_data:
             data = json.load(json_data)
         return data 
 
+    def _print_status(self):
+        print ({"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": [self.violations]})
+
     def account_creation(self, available_limit):
         if self.account_exist == True or self.available_limit is not None:
-            return {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["account_alread_initialized"]}
+            self.violations = "account_alread_initialized"
+            self._print_status()
+            #return {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["account_alread_initialized"]}
         self.active_card = True
+        self.account_exist = True
         self.available_limit = available_limit
-        return  {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": []}
+        self._print_status()
+        #return  {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": []}
 
     def transaction_authorization(self, amount, time):
         if self.account_exist == False:
-            return  {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["account_not_initialized"]}
+            self.violations = "account_not_initialized"
+            self._print_status()
+            #return  {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["account_not_initialized"]}
 
-        if self.active_card == False:
-            return  {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["card_not_active"]}
+        elif self.active_card == False:
+            self.violations = "card_not_active"
+            self._print_status()
+            #return  {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["card_not_active"]}
         
-        if self.available_limit - amount < 0:
-            return  {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["insufficient_limit"]}
+        elif self.available_limit - amount < 0:
+            self.violations = "insufficient_limit"
+            self._print_status()
+            #return  {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["insufficient_limit"]}
     
-         # to add : 1) 3 transactions in 2 mins 2) > 1 similar transactions in 2 mins
+        # to add : 1) 3 transactions in 2 mins 2) > 1 similar transactions in 2 mins
+        else:
+            self.available_limit = self.available_limit - amount
+            self._print_status()
+            #return {"account": {"active_card": self.active_card, "available_limit": self.available_limit - amount}, "violations": []}
 
-        return {"account": {"active_card": self.active_card, "available_limit": self.available_limit - amount}, "violations": []}
-
-    def get_account_status(self):
-        account_status = {'active_card': self.active_card,
-                          'available_limit': self.available_limit,
-                          'account_exist' : self.account_exist}
-        print (account_status)
-
-    def run(self, std_input, available_limit, amount, time):
+    def run(self, std_input):
         for i in range(len(std_input)):
-            op_name = list(user_input[i])[0]
+            op_name = list(std_input[i])[0]
             if op_name == 'account':
                 available_limit = std_input[i]['account']['available_limit']
                 self.account_creation(available_limit)
-            if op_name == 'transaction':
-                amount = user_input[i]['transaction']['amount']
-                time = user_input[i]['transaction']['time']
+            elif op_name == 'transaction':
+                amount = std_input[i]['transaction']['amount']
+                time = std_input[i]['transaction']['time']
                 self.transaction_authorization(amount, time)
             else:
                 raise KeyError("No such transaction type")   
