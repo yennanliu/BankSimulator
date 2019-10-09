@@ -41,6 +41,15 @@ class BankTransaction:
                           'account_exist' : self.account_exist}
         print (account_status)
 
-    def run(self, available_limit, amount, time):
-        self.account_creation(available_limit)
-        self.transaction_authorization(amount, time)
+    def run(self, std_input, available_limit, amount, time):
+        for i in range(len(std_input)):
+            op_name = list(user_input[i])[0]
+            if op_name == 'account':
+                available_limit = std_input[i]['account']['available_limit']
+                self.account_creation(available_limit)
+            if op_name == 'transaction':
+                amount = user_input[i]['transaction']['amount']
+                time = user_input[i]['transaction']['time']
+                self.transaction_authorization(amount, time)
+            else:
+                raise KeyError("No such transaction type")   
