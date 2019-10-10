@@ -40,13 +40,22 @@ class BankTransaction:
     def transaction_authorization(self, merchant, amount, time):
 
         def check_freq_transaction(transactions):
-            freq_transaction = False
             count = 0 
             for tran in transactions:
                 if (tran['time'] - transactions[-1]['time']).total_seconds() < 120:
                     count += 1
-            print ('count :', count) 
+            #print ('count :', count) 
             return True if count > 2 else False
+
+        # def check_doubled_transaction(transactions):
+        #     count = 0 
+        #     for tran in transactions:
+        #         if ((tran['time'] - transactions[-1]['time']).total_seconds() < 120
+        #             and tran['merchant'] == transactions[-1]['merchant']
+        #             and tran['amount'] == transactions[-1]['amount']):
+        #             count += 1
+        #     print ('count :', count) 
+        #     return True if count > 1 else False
 
         if self.status['account']['active_card'] == False:
             self.status['violations'] = ["account_not_initialized"]
