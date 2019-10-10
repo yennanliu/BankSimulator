@@ -10,6 +10,8 @@ $ pip install -r requirements.txt
 $ cat data/input1.json | python src/app.py 
 
 $ cat data/input2.json | python src/app.py 
+
+$ cat data/input6.json | python src/app.py 
 ```
 
 ### Run the test
