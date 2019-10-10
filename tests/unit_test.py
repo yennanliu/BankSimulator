@@ -36,7 +36,15 @@ def test_read_file_input():
 def test_print_status():
     bank = BankTransaction()
     expected_result = bank._print_status() 
+    #print ('expected_result :', expected_result)
     assert expected_result == {"account": {"active_card": False, "available_limit": None }, "violations": [None]}
+
+def test_account_creation():
+    bank = BankTransaction()
+    expected_result = bank.account_creation(available_limit=100)
+    print ('expected_result : ', expected_result)
+    assert expected_result == {"account": {"active_card": True, "available_limit": 100 }, "violations": [None]}
+
 
 if __name__ == '__main__':
     pytest.main([__file__])
