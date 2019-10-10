@@ -33,5 +33,10 @@ def test_read_file_input():
     json_file = bank._read_file_input('data/input1.json')
     assert json_file == expected_output  
 
+def test_print_status():
+    bank = BankTransaction()
+    expected_result = bank._print_status() 
+    assert expected_result == {"account": {"active_card": False, "available_limit": None }, "violations": [None]}
+
 if __name__ == '__main__':
     pytest.main([__file__])

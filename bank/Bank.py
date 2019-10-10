@@ -24,7 +24,8 @@ class BankTransaction:
 
     def _print_status(self):
         print ({"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": [self.violations]})
-
+        return ({"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": [self.violations]})
+    
     def account_creation(self, available_limit):
         if self.account_exist == True or self.available_limit is not None:
             self.violations = "account_already_initialized"
