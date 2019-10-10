@@ -4,12 +4,12 @@ import sys
 
 class BankTransaction:
     def __init__(self):
-        self.active_card = False
-        self.account_initialized = False
-        self.available_limit = None
-        self.violations = None
+        # self.active_card = False
+        # self.account_initialized = False
+        # self.available_limit = None
+        # self.violations = None
         self.transactions = {}
-        self.status =  {"account": {"active_card": self.active_card, "account_initialized": self.account_initialized, "available_limit": self.available_limit}, "violations": [self.violations]}
+        self.status =  {"account": {"active_card": False, "account_initialized": False, "available_limit": None}, "violations": [None]}
 
     def _read_file_input(self, json_file):
         with open(json_file) as json_data:
@@ -29,7 +29,7 @@ class BankTransaction:
     
     def account_creation(self, available_limit):
         if self.status['account']['active_card'] == True:
-            self.status['account']['violations'] = "account_already_initialized"
+            self.status['violations'] = ["account_already_initialized"]
             print(self.status)
             return self.status
         self.status['account']['active_card'] = True
@@ -41,13 +41,13 @@ class BankTransaction:
 
     def transaction_authorization(self, amount, time):
         if self.status['account']['active_card'] == False:
-            self.status['account']['violations'] = "account_not_initialized"
+            self.status['violations'] = ["account_not_initialized"]
             print(self.status)
             return self.status
 
         
         elif self.status['account']['available_limit'] - amount < 0:
-            self.status['account']['violations']  = "insufficient_limit"
+            self.status['violations']  = ["insufficient_limit"]
             print(self.status)
             return self.status
     
