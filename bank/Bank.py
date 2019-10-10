@@ -4,7 +4,7 @@ import sys
 
 class BankTransaction:
     def __init__(self):
-        self.transactions = {}
+        self.transactions = []
         self.status =  {"account": {"active_card": False, "account_initialized": False, "available_limit": None}, "violations": [None]}
 
     def _read_file_input(self, json_file):
@@ -35,7 +35,7 @@ class BankTransaction:
         return self.status
 
 
-    def transaction_authorization(self, amount, time):
+    def transaction_authorization(self, merchant, amount, time):
         if self.status['account']['active_card'] == False:
             self.status['violations'] = ["account_not_initialized"]
             print(self.status)
@@ -49,6 +49,7 @@ class BankTransaction:
         # to add : 1) 3 transactions in 2 mins 2) > 1 similar transactions in 2 mins
         else:
             self.status['account']['available_limit'] = self.status['account']['available_limit'] - amount
+            #self.transactions.append(myinput[i]['transaction'])
             print(self.status)
             return self.status
 
@@ -60,8 +61,9 @@ class BankTransaction:
                 available_limit = std_input[i]['account']['available_limit']
                 self.account_creation(available_limit)
             elif op_name == 'transaction':
+                merchant = std_input[i]['transaction']['merchant']
                 amount = std_input[i]['transaction']['amount']
                 time = std_input[i]['transaction']['time']
-                self.transaction_authorization(amount, time)
+                self.transaction_authorization(merchant, amount, time)
             else:
                 raise KeyError("No such transaction type")  
