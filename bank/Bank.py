@@ -4,10 +4,6 @@ import sys
 
 class BankTransaction:
     def __init__(self):
-        # self.active_card = False
-        # self.account_initialized = False
-        # self.available_limit = None
-        # self.violations = None
         self.transactions = {}
         self.status =  {"account": {"active_card": False, "account_initialized": False, "available_limit": None}, "violations": [None]}
 
@@ -45,7 +41,6 @@ class BankTransaction:
             print(self.status)
             return self.status
 
-        
         elif self.status['account']['available_limit'] - amount < 0:
             self.status['violations']  = ["insufficient_limit"]
             print(self.status)
