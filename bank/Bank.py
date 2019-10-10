@@ -5,10 +5,11 @@ import sys
 class BankTransaction:
     def __init__(self):
         self.active_card = False
+        self.account_initialized = False
         self.available_limit = None
         self.violations = None
         self.transactions = {}
-        self.status =  {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": [self.violations]}
+        self.status =  {"account": {"active_card": self.active_card, "account_initialized": self.account_initialized, "available_limit": self.available_limit}, "violations": [self.violations]}
 
     def _read_file_input(self, json_file):
         with open(json_file) as json_data:
@@ -23,7 +24,6 @@ class BankTransaction:
         return json.loads(input_data)
 
     def _print_status(self):
-        #status = {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": [self.violations]}
         print (self.status)
         return self.status
     
@@ -33,28 +33,29 @@ class BankTransaction:
             print(self.status)
             return self.status
         self.status['account']['active_card'] = True
+        self.status['account']['account_initialized'] = True
         self.status['account']['available_limit'] = available_limit
         print(self.status)
         return self.status
 
 
     def transaction_authorization(self, amount, time):
-        if self.active_card == False:
-            self.violations = "account_not_initialized"
-            self._print_status()
+        if self.status['account']['active_card'] == False:
+            self.status['account']['violations'] = "account_not_initialized"
+            print(self.status)
+            return self.status
 
-        elif self.active_card == False:
-            self.violations = "card_not_active"
-            self._print_status()
         
-        elif self.available_limit - amount < 0:
-            self.violations = "insufficient_limit"
-            self._print_status()
+        elif self.status['account']['available_limit'] - amount < 0:
+            self.status['account']['violations']  = "insufficient_limit"
+            print(self.status)
+            return self.status
     
         # to add : 1) 3 transactions in 2 mins 2) > 1 similar transactions in 2 mins
         else:
-            self.available_limit = self.available_limit - amount
-            self._print_status()
+            self.status['account']['available_limit'] = self.status['account']['available_limit'] - amount
+            print(self.status)
+            return self.status
 
     def run(self):
         std_input = self._read_stdin_input()
