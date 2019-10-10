@@ -12,7 +12,7 @@ $ cat data/input1.json | python src/app.py
 $ cat data/input2.json | python src/app.py 
 ```
 
-### Run test
+### Run the test
 ```bash
 $ pytest -v tests/ 
 
