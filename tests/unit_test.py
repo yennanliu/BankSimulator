@@ -31,7 +31,6 @@ def test_read_file_input():
     ]
     bank = BankTransaction()
     json_file = bank._read_file_input('data/input1.json')
-    print ('json_file :', json_file)
     assert json_file == expected_output  
 
 if __name__ == '__main__':
