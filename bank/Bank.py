@@ -29,7 +29,6 @@ class BankTransaction:
         if self.account_exist == True or self.available_limit is not None:
             self.violations = "account_already_initialized"
             self._print_status()
-            #return {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["account_alread_initialized"]}
         self.active_card = True
         self.account_exist = True
         self.available_limit = available_limit
@@ -39,7 +38,6 @@ class BankTransaction:
         if self.account_exist == False:
             self.violations = "account_not_initialized"
             self._print_status()
-            #return  {"account": {"active_card": self.active_card, "available_limit": self.available_limit}, "violations": ["account_not_initialized"]}
 
         elif self.active_card == False:
             self.violations = "card_not_active"
