@@ -3,3 +3,4 @@ bank/__pycache__/
 .DS_Store
 BankSimulator/tests/__pycache__/
 *.pyc
+*.ipynb
