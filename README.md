@@ -1,8 +1,12 @@
-### BankSimulator
+## BankSimulator
 
-- A simple app demo common bank functionality such as `account creation` and `transactions`, including account active check, balance check, and transactions validate.. as common logics in bank.
+### INTRO
+- A simple app demo common bank functionality such as `account creation` and `transactions`, including account active check, balance check, and transactions validate.. as common bank operaitons.
 - Read in the transactions information via `stdin`, parse to `account_creation`, and `transaction_authorization` and return the system output based on operation and business logic 
-- Not use external component storage transactions/account `state`, so here I use `python dictionary` save status `in-memory`
+- Not use external component storage transactions/account `state`, so here I use `python dictionary` to save status `in-memory` and run operations with
+
+- bank | src | tests
+- Tech : python3, pytest 
 
 ### File strucure 
 
@@ -15,6 +19,9 @@
 └── tests             : Unit tests 
 ```
 ### Quick start
+
+<details>
+<summary>Quick start</summary>
 
 ```bash
 $ pip install -r requirements.txt
@@ -40,6 +47,7 @@ $ cat data/input6.json | python src/app.py
 # {'account': {'account_initialized': True, 'active_card': True, 'available_limit': 60}, 'violations': ['high_frequency_small_interval']}
 
 ```
+</details>
 
 ### Run the test
 ```bash
