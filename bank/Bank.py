@@ -5,16 +5,31 @@ import sys
 
 
 class BankTransaction:
+    """
+    main class that cover bank opeations : 
+    1) account_creation
+    2) transaction_authorization
+    """
     def __init__(self):
         self.transactions = []
         self.status =  {"account": {"active_card": False, "account_initialized": False, "available_limit": None}, "violations": [None]}
 
     def _read_file_input(self, json_file):
+        """
+        load input via json load 
+        : input  : json file 
+        : output : python dict 
+        """
         with open(json_file) as json_data:
             data = json.load(json_data)
         return data 
 
     def _read_stdin_input(self):
+        """
+        load input via stdin
+        : input  : stdin
+        : output : python dict 
+        """
         input_data = ''
         for line in sys.stdin.readlines():
             input_data += line 
@@ -22,10 +37,18 @@ class BankTransaction:
         return json.loads(input_data)
 
     def _print_status(self):
+        """
+        print/parse account status
+        """
         print (self.status)
         return self.status
     
     def account_creation(self, available_limit):
+        """
+        method doing account creation operation 
+        : input  : stdin
+        : output : python dict 
+        """
         if self.status['account']['active_card'] == True:
             self.status['violations'] = ["account_already_initialized"]
             print(self.status)
@@ -38,8 +61,18 @@ class BankTransaction:
 
 
     def transaction_authorization(self, merchant, amount, time):
+        """
+        method doing transaction authorization  operation
+        : input  : stdin
+        : output : python dict 
+        """
 
         def check_freq_transaction(transactions):
+            """
+            help function check if there high frequency transaction 
+            : input  : python list 
+            : outoyt : booleans 
+            """
             count = 0 
             for tran in transactions:
                 if (tran['time'] - transactions[-1]['time']).total_seconds() < 120:
@@ -72,7 +105,6 @@ class BankTransaction:
             print(self.status)
             return self.status
 
-        # to add : 1) 3 transactions in 2 mins 2) > 1 similar transactions in 2 mins
         else:
             self.status['account']['available_limit'] = self.status['account']['available_limit'] - amount
             timestamp = datetime.strptime(time.split('.')[0],"%Y-%m-%dT%H:%M:%S")
@@ -82,6 +114,12 @@ class BankTransaction:
             return self.status
 
     def run(self):
+        """
+        main method run the whole process (_read_stdin_input -> account_creation -> transaction_authorization)
+        
+        :input  : stdin
+        :output : python dict 
+        """
         std_input = self._read_stdin_input()
         for i in range(len(std_input)):
             op_name = list(std_input[i])[0]
