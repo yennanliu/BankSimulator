@@ -32,8 +32,11 @@ class BankTransaction:
         input_data = ''
         for line in sys.stdin.readlines():
             input_data += line 
-        # transform string to json for following process 
-        return json.loads(input_data)
+        try:
+            # transform string to json for following process 
+            return json.loads(input_data)
+        except ValueError:
+            print ("invalid input")
 
     def _print_status(self):
         """
@@ -129,6 +132,8 @@ class BankTransaction:
         :output : python dict 
         """
         std_input = self._read_stdin_input()
+        if not std_input:
+            return "No output due to invalid input"
         for i in range(len(std_input)):
             op_name = list(std_input[i])[0]
             if op_name == 'account':
