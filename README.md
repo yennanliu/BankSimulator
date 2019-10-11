@@ -15,8 +15,8 @@
 ├── bank              : main class offering bank operaion (account_creation/transaction_authorization) methods 
 ├── data              : sample test data 
 ├── requirements.txt  : python dependency 
-├── src               : Main bank simulator app  (app.py)
-└── tests             : Unit tests 
+├── src               : main bank simulator app  (app.py)
+└── tests             : unit tests 
 ```
 ### Quick start
 
@@ -46,10 +46,21 @@ $ cat data/input6.json | python src/app.py
 # {'account': {'account_initialized': True, 'active_card': True, 'available_limit': 60}, 'violations': ['high_frequency_small_interval']}
 # {'account': {'account_initialized': True, 'active_card': True, 'available_limit': 60}, 'violations': ['high_frequency_small_interval']}
 
+$ cat data/input7.json | python src/app.py
+
+# {'account': {'account_initialized': True, 'active_card': True, 'available_limit': 100}, 'violations': [None]}
+# {'account': {'account_initialized': True, 'active_card': True, 'available_limit': 90}, 'violations': [None]}
+# {'account': {'account_initialized': True, 'active_card': True, 'available_limit': 80}, 'violations': [None]}
+# {'account': {'account_initialized': True, 'active_card': True, 'available_limit': 80}, 'violations': ['doubled_transaction']}
+
 ```
 </details>
 
 ### Run the test
+
+<details>
+<summary>Run the test</summary>
+
 ```bash
 $ pytest -v tests/ 
 
@@ -63,3 +74,4 @@ $ pytest -v tests/
 # ========================================= 4 passed in 0.03 seconds ==========================================
 
 ```
+</details>
