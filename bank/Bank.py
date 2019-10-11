@@ -10,6 +10,7 @@ class BankTransaction:
     2) transaction_authorization
     """
     def __init__(self):
+        # init account status, and transactions 
         self.transactions = []
         self.status =  {"account": {"active_card": False, "account_initialized": False, "available_limit": None}, "violations": [None]}
 
@@ -121,8 +122,8 @@ class BankTransaction:
 
         else:
             self.status['account']['available_limit'] = self.status['account']['available_limit'] - amount
-            timestamp = datetime.strptime(time.split('.')[0],"%Y-%m-%dT%H:%M:%S")
-            self.transactions.append({'merchant': merchant, 'amount': amount, 'time': timestamp})
+            timestamp = datetime.strptime(time.split('.')[0],"%Y-%m-%dT%H:%M:%S")   # time -> timestamp for transactions validation check
+            self.transactions.append({'merchant': merchant, 'amount': amount, 'time': timestamp}) # append all transactions event to a list for transactions validation check 
             print(self.status)
             return self.status
 
@@ -138,13 +139,16 @@ class BankTransaction:
             return "No output due to invalid input"
         for i in range(len(std_input)):
             op_name = list(std_input[i])[0]
+            # if an account relative event
             if op_name == 'account':
                 available_limit = std_input[i]['account']['available_limit']
                 self.account_creation(available_limit)
+            # if a transaction relative event
             elif op_name == 'transaction':
                 merchant = std_input[i]['transaction']['merchant']
                 amount = std_input[i]['transaction']['amount']
                 time = std_input[i]['transaction']['time']
                 self.transaction_authorization(merchant, amount, time)
+            # if input no valid event
             else:
                 raise KeyError("No such transaction type")  
