@@ -3,7 +3,6 @@ import argparse
 import json
 import sys
 
-
 class BankTransaction:
     """
     main class that cover bank opeations : 
@@ -66,10 +65,9 @@ class BankTransaction:
         : input  : stdin
         : output : python dict 
         """
-
         def check_freq_transaction(transactions):
             """
-            help function check if there high frequency transaction 
+            help function check if there are high frequency transactions : more than 3 transactions on a 2 minute 
             : input  : python list 
             : outoyt : booleans 
             """
@@ -80,15 +78,20 @@ class BankTransaction:
             #print ('count :', count) 
             return True if count > 2 else False
 
-        # def check_doubled_transaction(transactions):
-        #     count = 0 
-        #     for tran in transactions:
-        #         if ((tran['time'] - transactions[-1]['time']).total_seconds() < 120
-        #             and tran['merchant'] == transactions[-1]['merchant']
-        #             and tran['amount'] == transactions[-1]['amount']):
-        #             count += 1
-        #     print ('count :', count) 
-        #     return True if count > 1 else False
+        def check_doubled_transaction(transactions):
+            """
+            help function check if there are > 2 similar transactions with same merchant and amount in 2 minute 
+            : input  : python list 
+            : outoyt : booleans 
+            """
+            count = 0 
+            for tran in transactions:
+                if ((tran['time'] - transactions[-1]['time']).total_seconds() < 120
+                    and tran['merchant'] == transactions[-1]['merchant']
+                    and tran['amount'] == transactions[-1]['amount']):
+                    count += 1
+            #print ('count :', count) 
+            return True if count > 1 else False
 
         if self.status['account']['active_card'] == False:
             self.status['violations'] = ["account_not_initialized"]
@@ -97,6 +100,11 @@ class BankTransaction:
 
         elif check_freq_transaction(self.transactions) == True:
             self.status['violations'] = ["high_frequency_small_interval"]
+            print(self.status)
+            return self.status
+
+        elif check_doubled_transaction(self.transactions) == True:
+            self.status['violations'] = ["doubled_transaction"]
             print(self.status)
             return self.status
 
