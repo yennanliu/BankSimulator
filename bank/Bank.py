@@ -120,12 +120,11 @@ class BankTransaction:
             print(self.status)
             return self.status
 
-        else:
-            self.status['account']['available_limit'] = self.status['account']['available_limit'] - amount
-            timestamp = datetime.strptime(time.split('.')[0],"%Y-%m-%dT%H:%M:%S")   # time -> timestamp for transactions validation check
-            self.transactions.append({'merchant': merchant, 'amount': amount, 'time': timestamp}) # append all transactions event to a list for transactions validation check 
-            print(self.status)
-            return self.status
+        self.status['account']['available_limit'] = self.status['account']['available_limit'] - amount
+        timestamp = datetime.strptime(time.split('.')[0],"%Y-%m-%dT%H:%M:%S")   # time -> timestamp for transactions validation check
+        self.transactions.append({'merchant': merchant, 'amount': amount, 'time': timestamp}) # collect all transactions event to a list for transactions validation check 
+        print(self.status)
+        return self.status
 
     def run(self):
         """

@@ -24,6 +24,8 @@
 <summary>Quick start</summary>
 
 ```bash
+# quick start with OSX CLI 
+
 $ pip install -r requirements.txt
 
 $ cat data/input1.json | python src/app.py 
@@ -52,6 +54,13 @@ $ cat data/input7.json | python src/app.py
 # {'account': {'account_initialized': True, 'active_card': True, 'available_limit': 90}, 'violations': [None]}
 # {'account': {'account_initialized': True, 'active_card': True, 'available_limit': 80}, 'violations': [None]}
 # {'account': {'account_initialized': True, 'active_card': True, 'available_limit': 80}, 'violations': ['doubled_transaction']}
+
+```
+
+```bash
+# quick start with docker 
+$ docker build . -t app_env
+$ docker run -i -t  app_env /bin/bash  -c "cat data/input1.json | python src/app.py"
 
 ```
 </details>
