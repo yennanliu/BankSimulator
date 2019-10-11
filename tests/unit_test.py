@@ -46,7 +46,7 @@ def test_account_creation():
 def test_transaction_authorization():
     bank = BankTransaction()
     expected_result = bank.transaction_authorization(merchant ='my_merchant', amount=100, time="2019-02-13T10:00:00.000Z")
-    assert expected_result == {"account": {"active_card": False,"account_initialized": False, "available_limit": None }, "violations": ["account_not_initialized"]}
+    assert expected_result == {"account": {"active_card": False,"account_initialized": False, "available_limit": None }, "violations": ["card_not_active"]}
 
 if __name__ == '__main__':
     pytest.main([__file__])

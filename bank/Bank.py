@@ -76,7 +76,7 @@ class BankTransaction:
             """
             count = 0 
             for tran in transactions:
-                if (tran['time'] - transactions[-1]['time']).total_seconds() < 120:
+                if (tran['time'] - transactions[-1]['time']).total_seconds() < 120: # if any transaction is with coming transactions in 2 minute
                     count += 1
             return True if count > 2 else False
 
@@ -88,13 +88,18 @@ class BankTransaction:
             """
             count = 0 
             for tran in transactions:
-                if ((tran['time'] - transactions[-1]['time']).total_seconds() < 120
+                if ((tran['time'] - transactions[-1]['time']).total_seconds() < 120 # if any transaction is with coming transactions in 2 minute
                     and tran['merchant'] == transactions[-1]['merchant']
                     and tran['amount'] == transactions[-1]['amount']):
                     count += 1
             return True if count > 1 else False
 
         if self.status['account']['active_card'] == False:
+            self.status['violations'] = ["card_not_active"]
+            print(self.status)
+            return self.status
+
+        if self.status['account']['account_initialized'] == False:
             self.status['violations'] = ["account_not_initialized"]
             print(self.status)
             return self.status
