@@ -78,7 +78,6 @@ class BankTransaction:
             for tran in transactions:
                 if (tran['time'] - transactions[-1]['time']).total_seconds() < 120:
                     count += 1
-            #print ('count :', count) 
             return True if count > 2 else False
 
         def check_doubled_transaction(transactions):
@@ -93,7 +92,6 @@ class BankTransaction:
                     and tran['merchant'] == transactions[-1]['merchant']
                     and tran['amount'] == transactions[-1]['amount']):
                     count += 1
-            #print ('count :', count) 
             return True if count > 1 else False
 
         if self.status['account']['active_card'] == False:
@@ -121,7 +119,6 @@ class BankTransaction:
             timestamp = datetime.strptime(time.split('.')[0],"%Y-%m-%dT%H:%M:%S")
             self.transactions.append({'merchant': merchant, 'amount': amount, 'time': timestamp})
             print(self.status)
-            #print ('self.transactions : ', self.transactions)
             return self.status
 
     def run(self):
