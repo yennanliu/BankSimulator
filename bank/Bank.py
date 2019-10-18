@@ -133,6 +133,7 @@ class BankTransaction:
         :input  : stdin
         :output : python dict 
         """
+        response = []
         std_input = self._read_stdin_input()
         if not std_input:
             return "No output due to invalid input"
@@ -141,13 +142,14 @@ class BankTransaction:
             # if an account relative event
             if op_name == 'account':
                 available_limit = std_input[i]['account']['available_limit']
-                self.account_creation(available_limit)
+                response.append(self.account_creation(available_limit))
             # if a transaction relative event
             elif op_name == 'transaction':
                 merchant = std_input[i]['transaction']['merchant']
                 amount = std_input[i]['transaction']['amount']
                 time = std_input[i]['transaction']['time']
-                self.transaction_authorization(merchant, amount, time)
+                response.append(self.transaction_authorization(merchant, amount, time))
             # if input no valid event
             else:
-                raise KeyError("No such transaction type")  
+                raise KeyError("No such transaction type")
+        return response
