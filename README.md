@@ -84,3 +84,13 @@ $ pytest -v tests/
 
 ```
 </details>
+
+## TODO
+
+- Modify the process with asynchronous stream 
+- Consider the API lost idempotency situation if crash with no state storage 
+- write-ahead logging (WAL)  => commit status guarantee
+- robustness
+- build script, containerisation, dependencies
+- maintainability
+- clean code
